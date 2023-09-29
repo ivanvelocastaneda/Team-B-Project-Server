@@ -1,8 +1,11 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3100;
 const accountRouter = require("./routes/account");
 const ingredientRouter = require("./routes/ingredient");
+
+app.use(cors());
 
 app.use(express.json());
 app.use(
@@ -26,6 +29,6 @@ app.use((err, req, res, next) => {
   return;
 });
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Server listening at port: ${port}`);
 });
 
