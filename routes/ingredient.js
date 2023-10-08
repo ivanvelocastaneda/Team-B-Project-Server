@@ -2,15 +2,12 @@ const express = require('express');
 const router = express.Router();
 const ingredient = require('../services/ingredient');
 
-// app.use(express.json());
-// app.use(
-//   express.urlencoded({
-//     extended: true,
-//   })
-// );
 
 /* POST new ingredient. */
 router.post('/', async function(req, res, next) {
+  if(!req.body.ingredientName) {
+    return response.status(400).send('Missing name')
+  }
   try {
     const { ingredientName } = req.body;
     res.json(await ingredient.addIngredient(ingredientName));
@@ -18,9 +15,6 @@ router.post('/', async function(req, res, next) {
     res.status(500).json({ error: `Error while adding ingredient: ${err.message}` });
     next(err);
   }
-if(!req.body.ingredientName) {
-    return response.status(400).send('Missing name')
-}
 });
 
 /* DELETE ingredient by ingredientID. */
