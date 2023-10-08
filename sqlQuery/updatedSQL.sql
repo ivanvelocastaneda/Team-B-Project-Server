@@ -1,4 +1,4 @@
-- menu_item Table
+-- menu_item Table
 CREATE TABLE menu_item (
     itemID INT PRIMARY KEY,
     itemName VARCHAR(255),
@@ -21,26 +21,52 @@ CREATE TABLE item_ingredient (
     FOREIGN KEY (ingredientID) REFERENCES ingredient(ingredientID)
 );
 
--- user_info Table
-CREATE TABLE user_info (
-    userID INT PRIMARY KEY,
-    userType INT,
-    accountType INT,
-    username VARCHAR(255) UNIQUE,  -- Assuming usernames are unique
+-- customer Table
+CREATE TABLE customer (
+    customerID INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) UNIQUE,
     password VARCHAR(255),
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    street VARCHAR(255),
+    city VARCHAR(255),
+    state VARCHAR(50),
+    zip VARCHAR(10),
     rewardPoints INT,
     created_at DATETIME,
     updated_at DATETIME
 );
 
--- orders Table
-CREATE TABLE orders (
-    orderID INT PRIMARY KEY,
-    userID INT NOT NULL,
-    orderStatus ENUM('pending', 'completed'),  -- Adjust this as per your requirements
+-- employeeType Table
+CREATE TABLE employeeType (
+    typeID INT PRIMARY KEY AUTO_INCREMENT,
+    typeName VARCHAR(255) UNIQUE
+);
+
+-- employee Table
+CREATE TABLE employee (
+    employeeID INT PRIMARY KEY AUTO_INCREMENT,
+    pin VARCHAR(255) UNIQUE,
+    typeID INT,
+    firstName VARCHAR(255),
+    lastName VARCHAR(255),
+    street VARCHAR(255),
+    city VARCHAR(255),
+    state VARCHAR(50),
+    zip VARCHAR(10),
     created_at DATETIME,
     updated_at DATETIME,
-    FOREIGN KEY (userID) REFERENCES user_info(userID)
+    FOREIGN KEY (typeID) REFERENCES employeeType(typeID)
+);
+
+-- orders Table
+CREATE TABLE orders (
+    orderID INT PRIMARY KEY AUTO_INCREMENT,
+    customerID INT NOT NULL,
+    orderStatus ENUM('pending', 'completed'),
+    created_at DATETIME,
+    updated_at DATETIME,
+    FOREIGN KEY (customerID) REFERENCES customer(customerID)
 );
 
 -- order_item Relationship Table
@@ -61,20 +87,6 @@ CREATE TABLE restaurant_table (
     FOREIGN KEY (orderID) REFERENCES orders(orderID)
 );
 
--- account Table
-CREATE TABLE account (
-    accountType INT PRIMARY KEY,
-    firstName VARCHAR(255),
-    lastName VARCHAR(255),
-    street VARCHAR(255),
-    city VARCHAR(255),
-    state VARCHAR(50),
-    zip VARCHAR(10),
-    created_at DATETIME,
-    updated_at DATETIME
-    FOREIGN KEY (accountType) REFERENCES user_info(accountType),
-);
-
 -- payment_methods Table
 CREATE TABLE payment_methods (
     paymentMethodID INT PRIMARY KEY,
@@ -83,9 +95,9 @@ CREATE TABLE payment_methods (
 
 -- transaction Table
 CREATE TABLE transaction (
-    transactionID INT PRIMARY KEY,
-    userID INT,
-    employeeID INT,  -- Needs to be connected to an employees table or another relevant table
+    transactionID INT PRIMARY KEY AUTO_INCREMENT,
+    customerID INT,
+    employeeID INT,
     orderID INT,
     methodOfPayment INT,
     timeStamp DATETIME,
@@ -93,7 +105,8 @@ CREATE TABLE transaction (
     tax DECIMAL(10,2),
     tip DECIMAL(10,2),
     transTotal DECIMAL(10,2),
-    FOREIGN KEY (userID) REFERENCES user_info(userID),
+    FOREIGN KEY (customerID) REFERENCES customer(customerID),
+    FOREIGN KEY (employeeID) REFERENCES employee(employeeID),
     FOREIGN KEY (orderID) REFERENCES orders(orderID),
     FOREIGN KEY (methodOfPayment) REFERENCES payment_methods(paymentMethodID)
 );
@@ -109,13 +122,13 @@ CREATE TABLE transaction_item (
 
 -- reservation Table
 CREATE TABLE reservation (
-    reservationID INT PRIMARY KEY,
+    reservationID INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
-    userID INT,
+    customerID INT,
     dateTime DATETIME,
     numPeople INT,
     tableSelection INT,
-    FOREIGN KEY (userID) REFERENCES user_info(userID),
+    FOREIGN KEY (customerID) REFERENCES customer(customerID),
     FOREIGN KEY (tableSelection) REFERENCES restaurant_table(tableID),
     created_at DATETIME,
     updated_at DATETIME
@@ -123,9 +136,9 @@ CREATE TABLE reservation (
 
 -- time_log Table
 CREATE TABLE time_log (
-    id INT PRIMARY KEY,
-    userID INT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    employeeID INT,
     timeClockedIn DATETIME,
     timeClockedOut DATETIME,
-    FOREIGN KEY (userID) REFERENCES user_info(userID)
+    FOREIGN KEY (employeeID) REFERENCES employee(employeeID)
 );

@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = 3100;
-const accountRouter = require("./routes/account");
 const ingredientRouter = require("./routes/ingredient");
 
 app.use(cors());

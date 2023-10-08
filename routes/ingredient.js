@@ -11,13 +11,13 @@ const ingredient = require('../services/ingredient');
 
 /* POST new ingredient. */
 router.post('/', async function(req, res, next) {
-//   try {
-//     const { ingredientName } = req.body;
-//     res.json(await ingredient.addIngredient(ingredientName));
-//   } catch (err) {
-//     res.status(500).json({ error: `Error while adding ingredient: ${err.message}` });
-//     next(err);
-//   }
+  try {
+    const { ingredientName } = req.body;
+    res.json(await ingredient.addIngredient(ingredientName));
+  } catch (err) {
+    res.status(500).json({ error: `Error while adding ingredient: ${err.message}` });
+    next(err);
+  }
 if(!req.body.ingredientName) {
     return response.status(400).send('Missing name')
 }
