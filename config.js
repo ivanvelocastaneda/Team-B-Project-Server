@@ -1,11 +1,12 @@
+require('dotenv').config();
+
 const config = {
     db: {
-      /* don't expose password or any sensitive info, done only for demo */
-      host: "db4free.net",
-      user: "bjarnigod",
-      password: "Bjarni123456789",
-      database: "csci441_teamb",
-      connectTimeout: 60000
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      connectTimeout: process.env.DB_CONNECT_TIMEOUT
     },
     listPerPage: 10,
   };
