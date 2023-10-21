@@ -2,8 +2,8 @@ const db = require('./db');
 
 async function addTransaction(transaction) {
   const result = await db.query(
-    `INSERT INTO transaction (/* your columns here */) VALUES (?)`,
-    [/* your values here */]
+    `INSERT INTO transaction (customerID, employeeID, orderID, methodOfPayment, timeStamp, subtotal, tax, tip, transTotal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [transaction.customerID, transaction.employeeID, transaction.orderID, transaction.methodOfPayment, transaction.timeStamp, transaction.subtotal, transaction.tax, transaction.tip, transaction.transTotal]
   );
 
   return result;
@@ -27,14 +27,17 @@ async function getTransaction(transactionID) {
   return data[0];
 }
 
-async function updateTransaction(transactionID, /* other parameters */) {
+async function updateTransaction(transactionID, customerID, employeeID, orderID, methodOfPayment, timeStamp, subtotal, tax, tip, transTotal) {
   const result = await db.query(
-    `UPDATE transaction SET /* your update logic here */ WHERE transactionID = ?`,
-    [/* your values here */]
+    `UPDATE transaction SET customerID = ?, employeeID = ?, orderID = ?, methodOfPayment = ?, timeStamp = ?, subtotal = ?, tax = ?, tip = ?, transTotal = ? WHERE transactionID = ?`,
+    [customerID, employeeID, orderID, methodOfPayment, timeStamp, subtotal, tax, tip, transTotal, transactionID]
   );
+  `UPDATE time_log SET timeClockedIn = ?, timeClockedOut = ? WHERE id = ?`,
+  [timeClockedIn, timeClockedOut, id]
 
   return result;
 }
+
 
 async function getAllTransactions() {
   const data = await db.query(
