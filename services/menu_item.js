@@ -1,9 +1,9 @@
 const db = require('./db');
 
-async function addMenuItem(menuItem, description, price) {
+async function addMenuItem(menuItem, description, price, itemImage) {
   const result = await db.query(
-    `INSERT INTO menu_item (itemName, description, price) VALUES (?, ?, ?)`,
-    [menuItem, description, price]
+    `INSERT INTO menu_item (itemName, description, price, itemImage) VALUES (?, ?, ?, ?)`,
+    [menuItem, description, price, itemImage]
   );
 
   return result;
@@ -27,10 +27,10 @@ async function getMenuItem(itemID) {
   return data[0];
 }
 
-async function updateMenuItem(itemID, menuItem, description, price) {
+async function updateMenuItem(itemID, menuItem, description, price, itemImage) {
   const result = await db.query(
-    `UPDATE menu_item SET itemName = ?, description = ?, price = ? WHERE itemID = ?`,
-    [menuItem, description, price, itemID]
+    `UPDATE menu_item SET itemName = ?, description = ?, price = ?, itemImage = ? WHERE itemID = ?`,
+    [menuItem, description, price, itemImage, itemID]
   );
 
   return result;

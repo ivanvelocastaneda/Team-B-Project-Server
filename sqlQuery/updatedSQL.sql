@@ -3,7 +3,8 @@ CREATE TABLE menu_item (
     itemID INT PRIMARY KEY,
     itemName VARCHAR(255),
     description TEXT,
-    price DECIMAL(10,2)
+    price DECIMAL(10,2),
+    itemImage TEXT
 );
 
 -- ingredient Table
