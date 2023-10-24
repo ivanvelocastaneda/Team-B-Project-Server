@@ -5,8 +5,8 @@ const menuItem = require('../services/menu_item');
 /* POST new menu item. */
 router.post('/', async function(req, res, next) {
   try {
-    const { itemName, description, price } = req.body;
-    res.json(await menuItem.addMenuItem(itemName, description, price));
+    const { itemName, description, price, itemImage } = req.body;
+    res.json(await menuItem.addMenuItem(itemName, description, price, itemImage));
   } catch (err) {
     res.status(500).json({ error: `Error while adding menu item: ${err.message}` });
     next(err);
@@ -39,8 +39,8 @@ router.get('/:itemID', async function(req, res, next) {
 router.put('/:itemID', async function(req, res, next) {
   try {
     const { itemID } = req.params;
-    const { itemName, description, price } = req.body;
-    res.json(await menuItem.updateMenuItem(itemID, itemName, description, price));
+    const { itemName, description, price, itemImage } = req.body;
+    res.json(await menuItem.updateMenuItem(itemID, itemName, description, price, itemImage));
   } catch (err) {
     res.status(500).json({ error: `Error while updating menu item: ${err.message}` });
     next(err);
