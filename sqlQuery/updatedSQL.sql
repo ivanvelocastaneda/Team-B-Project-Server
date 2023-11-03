@@ -35,7 +35,8 @@ CREATE TABLE customer (
     zip VARCHAR(10),
     rewardPoints INT,
     created_at DATETIME,
-    updated_at DATETIME
+    updated_at DATETIME,
+    email VARCHAR(255)
 );
 
 -- employeeType Table
