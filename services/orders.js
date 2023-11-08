@@ -20,7 +20,7 @@ async function deleteOrder(orderID) {
 
 async function getOrder(orderID) {
   const data = await db.query(
-    `SELECT * FROM orders WHERE orderID = ?`,
+    `SELECT customerID, orderStatus, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM orders WHERE orderID = ?`,
     [orderID]
   );
 
@@ -38,7 +38,7 @@ async function updateOrder(orderID, orderStatus) {
 
 async function getAllOrders() {
   const data = await db.query(
-    `SELECT * FROM orders`
+    `SELECT customerID, orderStatus, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM orders`
   );
 
   return data;

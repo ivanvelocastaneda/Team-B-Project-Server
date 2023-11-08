@@ -20,7 +20,8 @@ async function deleteEmployee(employeeID) {
 
 async function getEmployee(employeeID) {
   const data = await db.query(
-    `SELECT * FROM employee WHERE employeeID = ?`,
+    // `SELECT * FROM employee WHERE employeeID = ?`,
+    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee WHERE employeeID = ?`,
     [employeeID]
   );
 
@@ -38,7 +39,7 @@ async function updateEmployee(employeeID, employee) {
 
 async function getAllEmployees() {
   const data = await db.query(
-    `SELECT * FROM employee`
+    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee`
   );
 
   return data;

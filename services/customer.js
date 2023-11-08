@@ -20,7 +20,7 @@ async function deleteCustomer(customerID) {
 
 async function getCustomer(customerID) {
   const data = await db.query(
-    `SELECT * FROM customer WHERE customerID = ?`,
+    `SELECT username, password, firstName, lastName, street, city, state, zip, rewardPoints, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM customer WHERE customerID = ?`,
     [customerID]
   );
 
@@ -38,7 +38,7 @@ async function updateCustomer(customerID, customerData) {
 
 async function getAllCustomers() {
   const data = await db.query(
-    `SELECT * FROM customer`
+    `SELECT username, password, firstName, lastName, street, city, state, zip, rewardPoints, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM customer`
   );
 
   return data;

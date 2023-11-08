@@ -21,7 +21,7 @@ async function deleteReservation(reservationID) {
 
 async function getReservation(reservationID) {
   const data = await db.query(
-    `SELECT * FROM reservation WHERE reservationID = ?`,
+    `SELECT reservationID, name, customerID, DATE_FORMAT(dateTime, '%Y-%m-%d %H:%i:%s') as dateTime, numPeople, tableSelection, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM reservation WHERE reservationID = ?`,
     [reservationID]
   );
 
@@ -40,7 +40,7 @@ async function updateReservation(reservationID, reservationDetails) {
 
 async function getAllReservations() {
   const data = await db.query(
-    `SELECT * FROM reservation`
+    `SELECT reservationID, name, customerID, DATE_FORMAT(dateTime, '%Y-%m-%d %H:%i:%s') as dateTime, numPeople, tableSelection, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM reservation`
   );
 
   return data;
