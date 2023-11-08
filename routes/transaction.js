@@ -5,8 +5,8 @@ const transaction = require('../services/transaction');
 /* POST new transaction. */
 router.post('/', async function(req, res, next) {
   try {
-    // Extract your parameters from req.body
-    res.json(await transaction.addTransaction(/* your parameters here */));
+    const transactionData = req.body;
+    res.json(await transaction.addTransaction(transactionData));
   } catch (err) {
     res.status(500).json({ error: `Error while adding transaction: ${err.message}` });
     next(err);
@@ -39,8 +39,8 @@ router.get('/:transactionID', async function(req, res, next) {
 router.put('/:transactionID', async function(req, res, next) {
   try {
     const { transactionID } = req.params;
-    // Extract other parameters from req.body
-    res.json(await transaction.updateTransaction(transactionID, /* other parameters */));
+    const transactionData = req.body;
+    res.json(await transaction.updateTransaction(transactionID, transactionData));
   } catch (err) {
     res.status(500).json({ error: `Error while updating transaction: ${err.message}` });
     next(err);
