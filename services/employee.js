@@ -2,8 +2,8 @@ const db = require('./db');
 
 async function addEmployee(employee) {
   const result = await db.query(
-    `INSERT INTO employee (pin, typeID, firstName, lastName, street, city, state, zip, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [employee.pin, employee.typeID, employee.firstName, employee.lastName, employee.street, employee.city, employee.state, employee.zip, employee.created_at, employee.updated_at]
+    `INSERT INTO employee (pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [employee.pin, employee.typeID, employee.firstName, employee.lastName, employee.street, employee.city, employee.state, employee.zip, employee.clockedIn, employee.hourlyRate, employee.created_at, employee.updated_at]
   );
 
   return result;
@@ -21,7 +21,7 @@ async function deleteEmployee(employeeID) {
 async function getEmployee(employeeID) {
   const data = await db.query(
     // `SELECT * FROM employee WHERE employeeID = ?`,
-    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee WHERE employeeID = ?`,
+    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee WHERE employeeID = ?`,
     [employeeID]
   );
 
@@ -30,8 +30,8 @@ async function getEmployee(employeeID) {
 
 async function updateEmployee(employeeID, employee) {
   const result = await db.query(
-    `UPDATE employee SET pin = ?, typeID = ?, firstName = ?, lastName = ?, street = ?, city = ?, state = ?, zip = ?, created_at = ?, updated_at = ? WHERE employeeID = ?`,
-    [employee.pin, employee.typeID, employee.firstName, employee.lastName, employee.street, employee.city, employee.state, employee.zip, employee.created_at, employee.updated_at, employeeID]
+    `UPDATE employee SET pin = ?, typeID = ?, firstName = ?, lastName = ?, street = ?, city = ?, state = ?, zip = ?, clockedIn = ?, hourlyRate = ?, created_at = ?, updated_at = ? WHERE employeeID = ?`,
+    [employee.pin, employee.typeID, employee.firstName, employee.lastName, employee.street, employee.city, employee.state, employee.zip, employee.clockedIn, employee.hourlyRate, employee.created_at, employee.updated_at, employeeID]
   );
 
   return result;
@@ -39,7 +39,7 @@ async function updateEmployee(employeeID, employee) {
 
 async function getAllEmployees() {
   const data = await db.query(
-    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee`
+    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee`
   );
 
   return data;
