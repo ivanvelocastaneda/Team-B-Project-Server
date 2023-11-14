@@ -56,6 +56,8 @@ CREATE TABLE employee (
     city VARCHAR(255),
     state VARCHAR(50),
     zip VARCHAR(10),
+    clockedIn BOOLEAN,
+    hourlyRate DECIMAL(10,2),
     created_at DATETIME,
     updated_at DATETIME,
     FOREIGN KEY (typeID) REFERENCES employeeType(typeID)
