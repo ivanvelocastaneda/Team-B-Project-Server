@@ -29,7 +29,7 @@ async function getMenuItem(itemID) {
 
 async function updateMenuItem(itemID, menuItem, description, price, itemImage, category, isDeleted, calories) {
   const result = await db.query(
-    `UPDATE menu_item SET itemName = ?, description = ?, price = ?, itemImage = ?, category = ?, isDeleted = ?, calories = ? WHERE itemID = ?`,
+    `UPDATE menu_item SET itemName = ?, description = ?, price = ?, itemImage = ?, category = ?, isDeleted = ?, calories = ? WHERE itemID = ? AND isDeleted = 0`,
     [menuItem, description, price, itemImage, category, isDeleted, calories, itemID]
   );
 
@@ -38,7 +38,7 @@ async function updateMenuItem(itemID, menuItem, description, price, itemImage, c
 
 async function getAllMenuItems() {
   const data = await db.query(
-    `SELECT * FROM menu_item`
+    `SELECT * FROM menu_item WHERE isDeleted = 0`
   );
 
   return data;
