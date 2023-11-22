@@ -21,7 +21,7 @@ async function deleteEmployee(employeeID) {
 async function getEmployee(employeeID) {
   const data = await db.query(
     // `SELECT * FROM employee WHERE employeeID = ?`,
-    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee WHERE employeeID = ? AND isDeleted = 0`,
+    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at, isDeleted FROM employee WHERE employeeID = ? AND isDeleted = 0`,
     [employeeID]
   );
 
@@ -39,7 +39,7 @@ async function updateEmployee(employeeID, employee) {
 
 async function getAllEmployees() {
   const data = await db.query(
-    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM employee WHERE isDeleted = 0`
+    `SELECT employeeID, pin, typeID, firstName, lastName, street, city, state, zip, clockedIn, hourlyRate, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at, isDeleted FROM employee WHERE isDeleted = 0`
   );
 
   return data;
