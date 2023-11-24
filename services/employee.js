@@ -31,7 +31,7 @@ async function getEmployee(employeeID) {
 async function updateEmployee(employeeID, employee) {
   const result = await db.query(
     `UPDATE employee SET pin = ?, typeID = ?, firstName = ?, lastName = ?, street = ?, city = ?, state = ?, zip = ?, clockedIn = ?, hourlyRate = ?, created_at = ?, updated_at = ?, isDeleted = ? WHERE employeeID = ?`,
-    [employee.pin, employee.typeID, employee.firstName, employee.lastName, employee.street, employee.city, employee.state, employee.zip, employee.clockedIn, employee.hourlyRate, employee.created_at, employee.updated_at, isDeleted, employeeID]
+    [employee.pin, employee.typeID, employee.firstName, employee.lastName, employee.street, employee.city, employee.state, employee.zip, employee.clockedIn, employee.hourlyRate, employee.created_at, employee.updated_at, employee.isDeleted, employeeID]
   );
 
   return result;
