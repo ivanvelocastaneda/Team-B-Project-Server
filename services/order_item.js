@@ -9,27 +9,27 @@ async function addOrderItem(orderID, itemID, itemQuantity) {
   return result;
 }
 
-async function deleteOrderItem(orderID, itemID) {
+async function deleteOrderItem(orderID) {
   const result = await db.query(
-    `DELETE FROM order_item WHERE orderID = ? AND itemID = ?`,
+    `DELETE FROM order_item WHERE orderID = ?`,
     [orderID, itemID]
   );
 
   return result;
 }
 
-async function getOrderItem(orderID, itemID) {
+async function getOrderItem(orderID) {
   const data = await db.query(
-    `SELECT * FROM order_item WHERE orderID = ? AND itemID = ?`,
-    [orderID, itemID]
+    `SELECT * FROM order_item WHERE orderID = ?`,
+    [orderID]
   );
 
-  return data[0];
+  return data;
 }
 
-async function updateOrderItem(orderID, itemID, itemQuantity) {
+async function updateOrderItem(orderID, itemQuantity) {
   const result = await db.query(
-    `UPDATE order_item SET itemQuantity = ? WHERE orderID = ? AND itemID = ?`,
+    `UPDATE order_item SET itemQuantity = ? WHERE orderID = ?`,
     [itemQuantity, orderID, itemID]
   );
 

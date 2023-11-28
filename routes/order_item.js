@@ -14,10 +14,10 @@ router.post('/', async function(req, res, next) {
 });
 
 /* DELETE order item by orderID and itemID. */
-router.delete('/:orderID/:itemID', async function(req, res, next) {
+router.delete('/:orderID', async function(req, res, next) {
   try {
-    const { orderID, itemID } = req.params;
-    res.json(await orderItem.deleteOrderItem(orderID, itemID));
+    const { orderID } = req.params;
+    res.json(await orderItem.deleteOrderItem(orderID));
   } catch (err) {
     res.status(500).json({ error: `Error while deleting order item: ${err.message}` });
     next(err);
@@ -25,10 +25,10 @@ router.delete('/:orderID/:itemID', async function(req, res, next) {
 });
 
 /* GET order item by orderID and itemID. */
-router.get('/:orderID/:itemID', async function(req, res, next) {
+router.get('/:orderID', async function(req, res, next) {
   try {
-    const { orderID, itemID } = req.params;
-    res.json(await orderItem.getOrderItem(orderID, itemID));
+    const { orderID } = req.params;
+    res.json(await orderItem.getOrderItem(orderID));
   } catch (err) {
     res.status(500).json({ error: `Error while getting order item: ${err.message}` });
     next(err);
@@ -36,7 +36,7 @@ router.get('/:orderID/:itemID', async function(req, res, next) {
 });
 
 /* PUT update order item by orderID and itemID. */
-router.put('/:orderID/:itemID', async function(req, res, next) {
+router.put('/:orderID', async function(req, res, next) {
   try {
     const { orderID, itemID } = req.params;
     const { itemQuantity } = req.body;
