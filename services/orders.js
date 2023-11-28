@@ -1,9 +1,9 @@
 const db = require('./db');
 
-async function addOrder(customerID, orderStatus) {
+async function addOrder(orderStatus, menuItems) {
   const result = await db.query(
-    `INSERT INTO orders (customerID, orderStatus, created_at, updated_at) VALUES (?, ?, NOW(), NOW())`,
-    [customerID, orderStatus]
+    `INSERT INTO orders (orderStatus, menuItems, created_at, updated_at) VALUES (?, ?, NOW(), NOW())`,
+    [orderStatus, menuItems]
   );
 
   return result;
@@ -20,17 +20,17 @@ async function deleteOrder(orderID) {
 
 async function getOrder(orderID) {
   const data = await db.query(
-    `SELECT customerID, orderStatus, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM orders WHERE orderID = ?`,
+    `SELECT orderID, orderStatus, menuItems, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM orders WHERE orderID = ?`,
     [orderID]
   );
 
   return data[0];
 }
 
-async function updateOrder(orderID, orderStatus) {
+async function updateOrder(orderID, orderStatus, menuItems) {
   const result = await db.query(
-    `UPDATE orders SET orderStatus = ?, updated_at = NOW() WHERE orderID = ?`,
-    [orderStatus, orderID]
+    `UPDATE orders SET orderStatus = ?, menuItems = ?, updated_at = NOW() WHERE orderID = ?`,
+    [orderStatus, menuItems, orderID]
   );
 
   return result;
@@ -38,7 +38,7 @@ async function updateOrder(orderID, orderStatus) {
 
 async function getAllOrders() {
   const data = await db.query(
-    `SELECT customerID, orderStatus, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM orders`
+    `SELECT orderID, orderStatus, menuItems, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM orders`
   );
 
   return data;
