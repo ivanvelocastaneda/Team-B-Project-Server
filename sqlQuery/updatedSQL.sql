@@ -66,11 +66,10 @@ CREATE TABLE employee (
 -- orders Table
 CREATE TABLE orders (
     orderID INT PRIMARY KEY AUTO_INCREMENT,
-    customerID INT NOT NULL,
-    orderStatus ENUM('pending', 'completed'),
+    orderStatus VARCHAR(20),
+    menuItems TEXT,
     created_at DATETIME,
     updated_at DATETIME,
-    FOREIGN KEY (customerID) REFERENCES customer(customerID)
 );
 
 -- order_item Relationship Table
