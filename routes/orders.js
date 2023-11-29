@@ -5,8 +5,8 @@ const orders = require('../services/orders');
 /* POST new order. */
 router.post('/', async function(req, res, next) {
   try {
-    const { orderStatus, menuItems } = req.body;
-    res.json(await orders.addOrder(orderStatus, menuItems));
+    const { orderStatus, menuItems, restaurantTable } = req.body;
+    res.json(await orders.addOrder(orderStatus, menuItems, restaurantTable));
   } catch (err) {
     res.status(500).json({ error: `Error while adding order: ${err.message}` });
     next(err);
@@ -39,8 +39,8 @@ router.get('/:orderID', async function(req, res, next) {
 router.put('/:orderID', async function(req, res, next) {
   try {
     const { orderID } = req.params;
-    const { orderStatus, menuItems } = req.body;
-    res.json(await orders.updateOrder(orderID, orderStatus, menuItems));
+    const { orderStatus, menuItems, restaurantTable } = req.body;
+    res.json(await orders.updateOrder(orderID, orderStatus, menuItems, restaurantTable));
   } catch (err) {
     res.status(500).json({ error: `Error while updating order: ${err.message}` });
     next(err);
