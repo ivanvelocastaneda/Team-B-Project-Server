@@ -91,6 +91,7 @@ async function addMultipleOrderItems(orderItems) {
 module.exports = {
   addOrderItem,
   deleteOrderItem,
+  deleteOrderItems,
   getOrderItem,
   updateOrderItem,
   getAllOrderItems,
