@@ -38,7 +38,7 @@ async function updateOrder(orderID, orderStatus, menuItems, restaurantTable) {
 
 async function getAllOrders() {
   const data = await db.query(
-    `SELECT orderID, orderStatus, menuItems, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at, restaurantTable FROM orders`
+    `SELECT orderID, orderStatus, menuItems, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at, restaurantTable FROM orders ORDER BY created_at DESC`
   );
 
   return data;
