@@ -44,10 +44,20 @@ async function getAllOrders() {
   return data;
 }
 
+async function getFullOrder(orderID) {
+  const data = await db.query(
+    `SELECT menu_item.itemName ,menu_item.description ,menu_item.calories ,menu_item.category ,order_item.itemQuantity ,menu_item.price ,orders.orderStatus ,orders.restaurantTable ,orders.created_at ,orders.updated_at FROM menu_item JOIN order_item ON menu_item.itemID = order_item.itemID JOIN orders ON order_item.orderID = orders.orderID WHERE order_item.orderID = ?`,
+    [orderID]
+  );
+
+  return data;
+}
+
 module.exports = {
   addOrder,
   deleteOrder,
   getOrder,
   updateOrder,
-  getAllOrders
+  getAllOrders,
+  getFullOrder
 };

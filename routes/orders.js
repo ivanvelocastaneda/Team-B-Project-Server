@@ -13,6 +13,8 @@ router.post('/', async function(req, res, next) {
   }
 });
 
+
+
 /* DELETE order by orderID. */
 router.delete('/:orderID', async function(req, res, next) {
   try {
@@ -53,6 +55,16 @@ router.get('/', async function(req, res, next) {
     res.json(await orders.getAllOrders());
   } catch (err) {
     res.status(500).json({ error: `Error while getting all orders: ${err.message}` });
+    next(err);
+  }
+});
+
+router.get('/fullorder/:orderID', async function(req, res, next) {
+  try {
+    const { orderID } = req.params;
+    res.json(await orders.getFullOrder(orderID));
+  } catch (err) {
+    res.status(500).json({ error: `Error while getting full order: ${err.message}` });
     next(err);
   }
 });
