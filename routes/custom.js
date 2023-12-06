@@ -11,4 +11,14 @@ router.get('/', async function(req, res, next) {
     }
   });
 
+  router.get('/:orderID', async function(req, res, next) {
+    try {
+      const { orderID } = req.params;
+      res.json(await custom.getLatestOrder(orderID));
+    } catch (err) {
+      res.status(500).json({ error: `Error while getting order: ${err.message}` });
+      next(err);
+    }
+  });
+
   module.exports = router;
