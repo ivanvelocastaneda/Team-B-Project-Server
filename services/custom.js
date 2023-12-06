@@ -6,8 +6,8 @@ async function getLatestOrders() {
       o.orderID,
       o.orderStatus,
       o.restaurantTable,
-      o.created_at,
-      o.updated_at
+      DATE_FORMAT(o.created_at, '%Y-%m-%d %H:%i:%s') as created_at,
+      DATE_FORMAT(o.updated_at, '%Y-%m-%d %H:%i:%s') as updated_at
   FROM 
       orders o
   INNER JOIN 
@@ -16,7 +16,8 @@ async function getLatestOrders() {
        GROUP BY restaurantTable) as latest
   ON 
       o.restaurantTable = latest.restaurantTable
-      AND o.created_at = latest.MaxDate;
+      AND o.created_at = latest.MaxDate
+      ORDER BY created_at DESC;
   `
     );
   
@@ -30,8 +31,8 @@ async function getLatestOrders() {
       o.orderID,
       o.orderStatus,
       o.restaurantTable,
-      o.created_at,
-      o.updated_at
+      DATE_FORMAT(o.created_at, '%Y-%m-%d %H:%i:%s') as created_at,
+      DATE_FORMAT(o.updated_at, '%Y-%m-%d %H:%i:%s') as updated_at
   FROM 
       orders o
   INNER JOIN 
