@@ -59,5 +59,5 @@ module.exports = {
   getOrder,
   updateOrder,
   getAllOrders,
-  getFullOrder
+  getFullOrder,
 };

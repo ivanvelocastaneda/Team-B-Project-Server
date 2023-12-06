@@ -17,6 +17,7 @@ const restaurant_tableRouter = require("./routes/restaurant_table");
 const time_logRouter = require("./routes/time_log");
 const transaction_itemRouter = require("./routes/transaction_item");
 const transactionRouter = require("./routes/transaction");
+const customRouter = require("./routes/custom");
 
 app.use(cors());
 
@@ -44,6 +45,7 @@ app.use("/restaurant_table", restaurant_tableRouter);
 app.use("/time_log", time_logRouter);
 app.use("/transaction_item", transaction_itemRouter);
 app.use("/transaction", transactionRouter);
+app.use("/custom", customRouter);
 
 
 
