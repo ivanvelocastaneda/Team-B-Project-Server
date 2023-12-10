@@ -1,0 +1,7 @@
+create a .env file and add the following to it:
+
+DB_HOST=db4free.net
+DB_USER=bjarnigod
+DB_PASSWORD=Bjarni123456789
+DB_DATABASE=csci441_teamb
+DB_CONNECT_TIMEOUT=60000
