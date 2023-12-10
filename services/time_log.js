@@ -20,7 +20,7 @@ async function deleteTimeLog(id) {
 
 async function getTimeLog(id) {
   const data = await db.query(
-    `SELECT * FROM time_log WHERE id = ?`,
+    `SELECT employeeID, DATE_FORMAT(timeClockedIn, '%Y-%m-%d %H:%i:%s') as timeClockedIn, DATE_FORMAT(timeClockedOut, '%Y-%m-%d %H:%i:%s') as timeClockedOut FROM time_log WHERE id = ?`,
     [id]
   );
 
@@ -38,7 +38,7 @@ async function updateTimeLog(id, timeClockedIn, timeClockedOut) {
 
 async function getAllTimeLogs() {
   const data = await db.query(
-    `SELECT * FROM time_log`
+    `SELECT employeeID, DATE_FORMAT(timeClockedIn, '%Y-%m-%d %H:%i:%s') as timeClockedIn, DATE_FORMAT(timeClockedOut, '%Y-%m-%d %H:%i:%s') as timeClockedOut FROM time_log`
   );
 
   return data;

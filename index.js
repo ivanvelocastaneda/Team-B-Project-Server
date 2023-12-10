@@ -9,7 +9,7 @@ const employeeTypeRouter = require("./routes/employeeType");
 const ingredientRouter = require("./routes/ingredient");
 const item_ingredientRouter = require("./routes/item_ingredient");
 const menu_itemRouter = require("./routes/menu_item");
-const order_timeRouter = require("./routes/order_item");
+const order_itemRouter = require("./routes/order_item");
 const ordersRouter = require("./routes/orders");
 const payment_methodsRouter = require("./routes/payment_methods");
 const reservationRouter = require("./routes/reservation");
@@ -17,6 +17,7 @@ const restaurant_tableRouter = require("./routes/restaurant_table");
 const time_logRouter = require("./routes/time_log");
 const transaction_itemRouter = require("./routes/transaction_item");
 const transactionRouter = require("./routes/transaction");
+const customRouter = require("./routes/custom");
 
 app.use(cors());
 
@@ -32,11 +33,11 @@ app.get("/", (req, res) => {
 
 app.use("/customer", customerRouter);
 app.use("/employee", employeeRouter);
-app.use("/employeeType", employeeTypeRouter);
+app.use("/employee_type", employeeTypeRouter);
 app.use("/ingredient", ingredientRouter);
 app.use("/item_ingredient", item_ingredientRouter);
 app.use("/menu_item", menu_itemRouter);
-app.use("/order_time", order_timeRouter);
+app.use("/order_item", order_itemRouter);
 app.use("/orders", ordersRouter);
 app.use("/payment_methods", payment_methodsRouter);
 app.use("/reservation", reservationRouter);
@@ -44,6 +45,7 @@ app.use("/restaurant_table", restaurant_tableRouter);
 app.use("/time_log", time_logRouter);
 app.use("/transaction_item", transaction_itemRouter);
 app.use("/transaction", transactionRouter);
+app.use("/custom", customRouter);
 
 
 

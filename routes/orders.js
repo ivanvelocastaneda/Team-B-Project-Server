@@ -5,13 +5,15 @@ const orders = require('../services/orders');
 /* POST new order. */
 router.post('/', async function(req, res, next) {
   try {
-    const { customerID, orderStatus } = req.body;
-    res.json(await orders.addOrder(customerID, orderStatus));
+    const { orderStatus, menuItems, restaurantTable } = req.body;
+    res.json(await orders.addOrder(orderStatus, menuItems, restaurantTable));
   } catch (err) {
     res.status(500).json({ error: `Error while adding order: ${err.message}` });
     next(err);
   }
 });
+
+
 
 /* DELETE order by orderID. */
 router.delete('/:orderID', async function(req, res, next) {
@@ -39,8 +41,8 @@ router.get('/:orderID', async function(req, res, next) {
 router.put('/:orderID', async function(req, res, next) {
   try {
     const { orderID } = req.params;
-    const { orderStatus } = req.body;
-    res.json(await orders.updateOrder(orderID, orderStatus));
+    const { orderStatus, menuItems, restaurantTable } = req.body;
+    res.json(await orders.updateOrder(orderID, orderStatus, menuItems, restaurantTable));
   } catch (err) {
     res.status(500).json({ error: `Error while updating order: ${err.message}` });
     next(err);
@@ -53,6 +55,16 @@ router.get('/', async function(req, res, next) {
     res.json(await orders.getAllOrders());
   } catch (err) {
     res.status(500).json({ error: `Error while getting all orders: ${err.message}` });
+    next(err);
+  }
+});
+
+router.get('/fullorder/:orderID', async function(req, res, next) {
+  try {
+    const { orderID } = req.params;
+    res.json(await orders.getFullOrder(orderID));
+  } catch (err) {
+    res.status(500).json({ error: `Error while getting full order: ${err.message}` });
     next(err);
   }
 });

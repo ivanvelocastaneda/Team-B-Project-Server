@@ -18,6 +18,15 @@ async function deleteOrderItem(orderID, itemID) {
   return result;
 }
 
+async function deleteOrderItems(orderID) {
+  const result = await db.query(
+    `DELETE FROM order_item WHERE orderID = ?`,
+    [orderID]
+  );
+
+  return result;
+}
+
 async function getOrderItem(orderID, itemID) {
   const data = await db.query(
     `SELECT * FROM order_item WHERE orderID = ? AND itemID = ?`,
@@ -25,6 +34,15 @@ async function getOrderItem(orderID, itemID) {
   );
 
   return data[0];
+}
+
+async function getOrderItem(orderID) {
+  const data = await db.query(
+    `SELECT * FROM order_item WHERE orderID = ?`,
+    [orderID]
+  );
+
+  return data;
 }
 
 async function updateOrderItem(orderID, itemID, itemQuantity) {
@@ -44,10 +62,38 @@ async function getAllOrderItems() {
   return data;
 }
 
+// async function addMultipleOrderItems(orderItems) {
+//   const results = [];
+//   for (const item of orderItems) {
+//     const result = await db.query(
+//       `INSERT INTO order_item (orderID, itemID, itemQuantity) VALUES (?, ?, ?)`,
+//       [item.orderID, item.itemID, item.itemQuantity]
+//     );
+//     results.push(result);
+//   }
+//   return results;
+// }
+
+async function addMultipleOrderItems(orderItems) {
+  const results = [];
+  for (const item of orderItems) {
+    const result = await db.query(
+      `INSERT INTO order_item (orderID, itemID, itemQuantity) VALUES (?, ?, ?)
+       ON DUPLICATE KEY UPDATE itemQuantity = VALUES(itemQuantity)`,
+      [item.orderID, item.itemID, item.itemQuantity]
+    );
+    results.push(result);
+  }
+  return results;
+}
+
+
 module.exports = {
   addOrderItem,
   deleteOrderItem,
+  deleteOrderItems,
   getOrderItem,
   updateOrderItem,
-  getAllOrderItems
+  getAllOrderItems,
+  addMultipleOrderItems
 };

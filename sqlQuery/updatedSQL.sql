@@ -35,7 +35,8 @@ CREATE TABLE customer (
     zip VARCHAR(10),
     rewardPoints INT,
     created_at DATETIME,
-    updated_at DATETIME
+    updated_at DATETIME,
+    email VARCHAR(255)
 );
 
 -- employeeType Table
@@ -55,6 +56,8 @@ CREATE TABLE employee (
     city VARCHAR(255),
     state VARCHAR(50),
     zip VARCHAR(10),
+    clockedIn BOOLEAN,
+    hourlyRate DECIMAL(10,2),
     created_at DATETIME,
     updated_at DATETIME,
     FOREIGN KEY (typeID) REFERENCES employeeType(typeID)
@@ -63,11 +66,10 @@ CREATE TABLE employee (
 -- orders Table
 CREATE TABLE orders (
     orderID INT PRIMARY KEY AUTO_INCREMENT,
-    customerID INT NOT NULL,
-    orderStatus ENUM('pending', 'completed'),
+    orderStatus VARCHAR(20),
+    menuItems TEXT,
     created_at DATETIME,
     updated_at DATETIME,
-    FOREIGN KEY (customerID) REFERENCES customer(customerID)
 );
 
 -- order_item Relationship Table

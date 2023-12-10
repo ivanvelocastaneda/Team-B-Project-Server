@@ -2,7 +2,7 @@ const db = require('./db');
 
 async function addTransaction(transaction) {
   const result = await db.query(
-    `INSERT INTO transaction (customerID, employeeID, orderID, methodOfPayment, timeStamp, subtotal, tax, tip, transTotal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    `INSERT INTO transaction (customerID, employeeID, orderID, methodPayment, timeStamp, subtotal, tax, tip, transTotal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [transaction.customerID, transaction.employeeID, transaction.orderID, transaction.methodOfPayment, transaction.timeStamp, transaction.subtotal, transaction.tax, transaction.tip, transaction.transTotal]
   );
 
@@ -20,28 +20,25 @@ async function deleteTransaction(transactionID) {
 
 async function getTransaction(transactionID) {
   const data = await db.query(
-    `SELECT * FROM transaction WHERE transactionID = ?`,
+    `SELECT transactionID, customerID, employeeID, orderID, methodOfPayment, DATE_FORMAT(timeStamp, '%Y-%m-%d %H:%i:%s') as timeStamp, subtotal, tax, tip, transTotal FROM transaction WHERE transactionID = ?`,
     [transactionID]
   );
 
   return data[0];
 }
 
-async function updateTransaction(transactionID, customerID, employeeID, orderID, methodOfPayment, timeStamp, subtotal, tax, tip, transTotal) {
+async function updateTransaction(transactionID, transaction) {
   const result = await db.query(
     `UPDATE transaction SET customerID = ?, employeeID = ?, orderID = ?, methodOfPayment = ?, timeStamp = ?, subtotal = ?, tax = ?, tip = ?, transTotal = ? WHERE transactionID = ?`,
-    [customerID, employeeID, orderID, methodOfPayment, timeStamp, subtotal, tax, tip, transTotal, transactionID]
+    [transaction.customerID, transaction.employeeID, transaction.orderID, transaction.methodOfPayment, transaction.timeStamp, transaction.subtotal, transaction.tax, transaction.tip, transaction.transTotal, transactionID]
   );
-  `UPDATE time_log SET timeClockedIn = ?, timeClockedOut = ? WHERE id = ?`,
-  [timeClockedIn, timeClockedOut, id]
 
   return result;
 }
 
-
 async function getAllTransactions() {
   const data = await db.query(
-    `SELECT * FROM transaction`
+    `SELECT transactionID, customerID, employeeID, orderID, methodOfPayment, DATE_FORMAT(timeStamp, '%Y-%m-%d %H:%i:%s') as timeStamp, subtotal, tax, tip, transTotal FROM transaction`
   );
 
   return data;

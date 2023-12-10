@@ -1,9 +1,9 @@
 const db = require('./db');
 
-async function addMenuItem(menuItem, description, price, itemImage) {
+async function addMenuItem(menuItem, description, price, itemImage, category, isDeleted, calories) {
   const result = await db.query(
-    `INSERT INTO menu_item (itemName, description, price, itemImage) VALUES (?, ?, ?, ?)`,
-    [menuItem, description, price, itemImage]
+    `INSERT INTO menu_item (itemName, description, price, itemImage, category, isDeleted, calories) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [menuItem, description, price, itemImage, category, isDeleted, calories]
   );
 
   return result;
@@ -27,10 +27,10 @@ async function getMenuItem(itemID) {
   return data[0];
 }
 
-async function updateMenuItem(itemID, menuItem, description, price, itemImage) {
+async function updateMenuItem(itemID, menuItem, description, price, itemImage, category, isDeleted, calories) {
   const result = await db.query(
-    `UPDATE menu_item SET itemName = ?, description = ?, price = ?, itemImage = ? WHERE itemID = ?`,
-    [menuItem, description, price, itemImage, itemID]
+    `UPDATE menu_item SET itemName = ?, description = ?, price = ?, itemImage = ?, category = ?, isDeleted = ?, calories = ? WHERE itemID = ? AND isDeleted = 0`,
+    [menuItem, description, price, itemImage, category, isDeleted, calories, itemID]
   );
 
   return result;
@@ -38,7 +38,7 @@ async function updateMenuItem(itemID, menuItem, description, price, itemImage) {
 
 async function getAllMenuItems() {
   const data = await db.query(
-    `SELECT * FROM menu_item`
+    `SELECT * FROM menu_item WHERE isDeleted = 0`
   );
 
   return data;

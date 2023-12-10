@@ -2,8 +2,8 @@ const db = require('./db');
 
 async function addCustomer(customerData) {
   const result = await db.query(
-    `INSERT INTO customer (username, password, firstName, lastName, street, city, state, zip, rewardPoints, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [customerData.username, customerData.password, customerData.firstName, customerData.lastName, customerData.street, customerData.city, customerData.state, customerData.zip, customerData.rewardPoints, customerData.created_at, customerData.updated_at]
+    `INSERT INTO customer (username, password, firstName, lastName, street, city, state, zip, rewardPoints, created_at, updated_at, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [customerData.username, customerData.password, customerData.firstName, customerData.lastName, customerData.street, customerData.city, customerData.state, customerData.zip, customerData.rewardPoints, customerData.created_at, customerData.updated_at, customerData.email]
   );
 
   return result;
@@ -20,7 +20,7 @@ async function deleteCustomer(customerID) {
 
 async function getCustomer(customerID) {
   const data = await db.query(
-    `SELECT * FROM customer WHERE customerID = ?`,
+    `SELECT username, password, firstName, lastName, street, city, state, zip, rewardPoints, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM customer WHERE customerID = ?`,
     [customerID]
   );
 
@@ -29,8 +29,8 @@ async function getCustomer(customerID) {
 
 async function updateCustomer(customerID, customerData) {
   const result = await db.query(
-    `UPDATE customer SET username = ?, password = ?, firstName = ?, lastName = ?, street = ?, city = ?, state = ?, zip = ?, rewardPoints = ?, created_at = ?, updated_at = ? WHERE customerID = ?`,
-    [customerData.username, customerData.password, customerData.firstName, customerData.lastName, customerData.street, customerData.city, customerData.state, customerData.zip, customerData.rewardPoints, customerData.created_at, customerData.updated_at, customerID]
+    `UPDATE customer SET username = ?, password = ?, firstName = ?, lastName = ?, street = ?, city = ?, state = ?, zip = ?, rewardPoints = ?, created_at = ?, updated_at = ?, email = ? WHERE customerID = ?`,
+    [customerData.username, customerData.password, customerData.firstName, customerData.lastName, customerData.street, customerData.city, customerData.state, customerData.zip, customerData.rewardPoints, customerData.created_at, customerData.updated_at, customerData.email, customerID]
   );
 
   return result;
@@ -38,7 +38,7 @@ async function updateCustomer(customerID, customerData) {
 
 async function getAllCustomers() {
   const data = await db.query(
-    `SELECT * FROM customer`
+    `SELECT username, password, firstName, lastName, street, city, state, zip, rewardPoints, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at, DATE_FORMAT(updated_at, '%Y-%m-%d %H:%i:%s') as updated_at FROM customer`
   );
 
   return data;
